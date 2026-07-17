@@ -70,7 +70,18 @@ DB_MAX = 10.0
 class SampleSource:
     """One ZMQ SUB socket + rolling buffer of the most recent raw complex
     samples for a given zmq_address, shared across every client subscribed
-    to that same address."""
+    to that same address.
+
+    Uses a true circular buffer: each incoming ZMQ message is written in
+    O(message_len), not O(buffer_len). The earlier version rebuilt the whole
+    buffer with np.concatenate on *every* incoming message — cheap-looking,
+    but GNU Radio can emit hundreds of small messages per second, so that
+    O(buffer_len) copy ran at message rate, not frame rate, and was the
+    actual cause of the bridge falling behind on constrained hardware (e.g.
+    a Raspberry Pi). Reassembling into linear (oldest-to-newest) order now
+    only happens in snapshot(), which the emit loop calls at a fixed ~30fps
+    regardless of how fast the source produces samples.
+    """
 
     def __init__(self, zmq_context, zmq_address, buffer_len):
         self.zmq_address = zmq_address
@@ -79,6 +90,8 @@ class SampleSource:
         self._socket.connect(zmq_address)
         self._socket.setsockopt_string(zmq.SUBSCRIBE, "")
         self._buffer = np.zeros(buffer_len, dtype=np.complex64)
+        self._write_pos = 0
+        self._wrapped = False
         self._task = None
         self._refcount = 0
 
@@ -89,10 +102,22 @@ class SampleSource:
             n = len(samples)
             if n <= 0:
                 continue
+
             if n >= self.buffer_len:
                 self._buffer[:] = samples[-self.buffer_len :]
+                self._write_pos = 0
+                self._wrapped = True
+                continue
+
+            end = self._write_pos + n
+            if end <= self.buffer_len:
+                self._buffer[self._write_pos : end] = samples
             else:
-                self._buffer = np.concatenate([self._buffer[n:], samples])
+                first_part = self.buffer_len - self._write_pos
+                self._buffer[self._write_pos :] = samples[:first_part]
+                self._buffer[: end - self.buffer_len] = samples[first_part:]
+                self._wrapped = True
+            self._write_pos = end % self.buffer_len
 
     def acquire(self):
         self._refcount += 1
@@ -107,7 +132,13 @@ class SampleSource:
             self._socket.close()
 
     def snapshot(self):
-        return self._buffer.copy()
+        if not self._wrapped:
+            # Startup transient only: buffer not full yet, current contents
+            # (zero-padded tail) are already in oldest-to-newest order.
+            return self._buffer.copy()
+        # Oldest sample is at _write_pos (about to be overwritten next),
+        # newest just before it — reorder into a plain linear array.
+        return np.concatenate([self._buffer[self._write_pos :], self._buffer[: self._write_pos]])
 
 
 _sources = {}
@@ -122,9 +153,22 @@ def get_source(zmq_context, zmq_address, buffer_len):
     return source
 
 
+_window_cache = {}
+
+
+def get_window(fft_size):
+    # np.blackman(fft_size) is the same array every time for a given
+    # fft_size — recomputing it on every emitted frame (~30/sec) was wasted
+    # CPU for no benefit.
+    window = _window_cache.get(fft_size)
+    if window is None:
+        window = np.blackman(fft_size)
+        _window_cache[fft_size] = window
+    return window
+
+
 def compute_fft_db(samples, fft_size):
-    window = np.blackman(fft_size)
-    windowed = samples[-fft_size:] * window
+    windowed = samples[-fft_size:] * get_window(fft_size)
     spectrum = np.fft.fftshift(np.fft.fft(windowed))
     power_db = 20 * np.log10(np.abs(spectrum) + 1e-10)
     return np.clip(power_db, DB_MIN, DB_MAX).astype(np.float32)

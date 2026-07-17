@@ -60,3 +60,7 @@ mediamtx.yml
 # Ground Station MQTT credentials — contains a real broker password.
 # Copy local-env.example.js to local-env.js and fill in your real values.
 local-env.js
+
+# Python bytecode cache (scripts/zmq-ws-bridge.py)
+__pycache__/
+*.pyc

@@ -131,8 +131,21 @@ export default {
       }
 
       const ctx = canvas.getContext('2d');
-      const scrolled = ctx.getImageData(0, 0, canvas.width, canvas.height - ROW_HEIGHT);
-      ctx.putImageData(scrolled, 0, ROW_HEIGHT);
+      // Scroll via a self-blit (GPU-composited) instead of
+      // getImageData/putImageData (a full-canvas JS-visible pixel array
+      // round-trip) — getImageData/putImageData every frame was the main
+      // cost in the waterfall render, separate from the bridge-side fix.
+      ctx.drawImage(
+        canvas,
+        0,
+        0,
+        canvas.width,
+        canvas.height - ROW_HEIGHT,
+        0,
+        ROW_HEIGHT,
+        canvas.width,
+        canvas.height - ROW_HEIGHT
+      );
 
       const row = ctx.createImageData(canvas.width, ROW_HEIGHT);
       for (let x = 0; x < canvas.width; x++) {

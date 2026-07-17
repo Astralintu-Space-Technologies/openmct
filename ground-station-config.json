@@ -8,13 +8,13 @@
           "key": "antenna",
           "type": "antenna",
           "name": "Antenna AZ/EL",
-          "restBaseUrl": "http://ast-egsn.local:8000"
+          "restBaseUrl": "http://10.126.1.132:8000"
         },
         {
           "key": "sdr",
           "type": "sdr",
           "name": "SDR Waterfall",
-          "waterfallWsUrl": "ws://ast-egsn.local:8765",
+          "waterfallWsUrl": "ws://10.126.1.132:8765",
           "zmqAddress": "tcp://10.126.1.111:55004",
           "frequency": 437000000,
           "sampleRate": 250000,
@@ -25,13 +25,13 @@
           "key": "override",
           "type": "override",
           "name": "Manual Override",
-          "restBaseUrl": "http://ast-egsn.local:8000"
+          "restBaseUrl": "http://10.126.1.132:8000"
         },
         {
           "key": "camera",
           "type": "camera",
           "name": "Camera",
-          "streamUrl": "http://ast-egsn.local:8888/groundstation-camera/index.m3u8",
+          "streamUrl": "http://10.126.1.132:8888/groundstation-camera/index.m3u8",
           "streamType": "hls"
         },
         {

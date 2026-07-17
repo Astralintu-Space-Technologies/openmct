@@ -7,8 +7,6 @@ services:
     container_name: openmct-dashboard
     ports:
       - "8080:80"
-    networks:
-      - astralintu-network
     restart: unless-stopped
 
   zmq-ws-bridge:
@@ -17,9 +15,8 @@ services:
       dockerfile: Dockerfile
     image: zmq-ws-bridge:local
     container_name: zmq-ws-bridge
-    # host networking, not the compose network: this needs to reach the SDR
-    # flowgraph's ZMQ PUB sink, which is a process on the host (often
-    # tcp://127.0.0.1:...) rather than another container.
+    # host networking: needs to reach the SDR flowgraph's ZMQ PUB sink,
+    # which is a process on another machine on the LAN, not a container.
     network_mode: host
     restart: unless-stopped
 
@@ -33,11 +30,11 @@ services:
     ports:
       - "8554:8554" # RTSP
       - "8888:8888" # HLS — this is what the Camera panel's streamUrl points at
-    networks:
-      - astralintu-network
     restart: unless-stopped
 
-networks:
-  astralintu-network:
-    name: astralintu-network
-    external: true
+# No custom/external network here on purpose: none of these three services
+# talk to each other or to antenna-controller's containers over docker
+# networking — the browser reaches everything through host-published ports
+# (8000 for antenna-controller, 8080/8554/8888 here), so container-level
+# network topology doesn't matter. Each service gets compose's own default
+# network, which is all it needs.

@@ -38,7 +38,7 @@
           "key": "contacts",
           "type": "contacts",
           "name": "Contacts",
-          "gsApiUrl": "https://develop.astralintu-egsn.com",
+          "gsApiUrl": "https://prod.astralintu-egsn.com",
           "groundStationId": "",
           "reservedOnly": false
         },
@@ -46,7 +46,7 @@
           "key": "weather",
           "type": "weather",
           "name": "Weather",
-          "mqttUrl": "wss://your-mqtt-endpoint:9001",
+          "mqttUrl": "wss://mqtt.astralintu-egsn.com:9001",
           "mqttUsername": "",
           "mqttPassword": "",
           "weatherTopic": "weather/loop",

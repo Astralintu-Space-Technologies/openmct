@@ -52,3 +52,7 @@ codecov
 *-darwin.png
 /.run/All Tests.run.xml
 .claude/
+
+# Ground Station camera bridge — contains real camera RTSP credentials.
+# Copy mediamtx.yml.example to mediamtx.yml and fill in your real camera.
+mediamtx.yml

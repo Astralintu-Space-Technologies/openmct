@@ -26,6 +26,8 @@ services:
   camera-bridge:
     image: bluenviron/mediamtx:latest
     container_name: camera-bridge
+    # mediamtx.yml is gitignored (real camera credentials) — copy it from
+    # mediamtx.yml.example first if it doesn't exist yet on this host.
     volumes:
       - ./mediamtx.yml:/mediamtx.yml:ro
     ports:

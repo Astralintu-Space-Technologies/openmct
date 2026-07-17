@@ -2,8 +2,13 @@
 # (verified against the real image's default /mediamtx.yml and paths syntax;
 # any key not set here just uses MediaMTX's own built-in default).
 #
-# Edit the "groundstation-camera" source below to your real RTSP camera URL,
-# then set the Camera panel's streamUrl (in ground-station-config.json) to:
+# This is a TEMPLATE, not the file docker-compose actually mounts:
+#   cp mediamtx.yml.example mediamtx.yml
+# then edit the real mediamtx.yml with your camera's real RTSP URL/credentials.
+# mediamtx.yml is gitignored on purpose — it will contain a real camera
+# password, unlike this example.
+#
+# Once running, set the Camera panel's streamUrl (in ground-station-config.json) to:
 #   http://<this-host>:8888/groundstation-camera/index.m3u8
 
 hls: true

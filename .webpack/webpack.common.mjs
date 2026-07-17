@@ -110,6 +110,11 @@ const config = {
           }
         },
         {
+          // The Ground Station plugin's dashboards/panels are defined here,
+          // not clicked together in the UI — edit this file directly.
+          from: './ground-station-config.json'
+        },
+        {
           from: 'src/plugins/imagery/layers',
           to: 'imagery'
         }

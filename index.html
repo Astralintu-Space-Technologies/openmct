@@ -106,6 +106,26 @@
       openmct.install(openmct.plugins.example.ExampleImagery());
       openmct.install(openmct.plugins.example.ExampleTags());
 
+      openmct.install(
+        openmct.plugins.GroundStation({
+          // Which dashboards/panels exist is defined in ground-station-config.json
+          // (repo root, copied alongside this file) — edit that, not this script,
+          // to add/remove panels. It's fetched as configUrl by default; pass
+          // options.config here instead for an inline object if you'd rather not
+          // maintain a separate file.
+
+          // Same broker/paths mcc-front uses (apps/web/.env.dev) — fill these in
+          // for your deployment. Antenna/RF/pass/heartbeat telemetry and manual
+          // override/waterfall controls stay disabled (with an on-screen hint)
+          // until these are set.
+          mqttUrl: 'wss://your-mqtt-endpoint:9001',
+          mqttUsername: '',
+          mqttPassword: '',
+          restBaseUrl: 'http://localhost:8000',
+          waterfallWsUrl: 'ws://localhost:8765'
+        })
+      );
+
       openmct.install(openmct.plugins.Espresso());
       openmct.install(openmct.plugins.MyItems());
       openmct.install(

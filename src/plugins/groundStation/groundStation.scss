@@ -1,0 +1,623 @@
+/* Ground Station plugin styles.
+ * Plain global SCSS, not Vue SFC <style scoped> blocks — this codebase's
+ * theme bundles (espressoTheme.css etc.) are compiled from the partials
+ * imported by src/styles/vue-styles.scss (see e.g. plugins/gauge/gauge.scss),
+ * not from per-component <style> blocks, which never get linked into the
+ * page at all. Import this file there to make it take effect.
+ */
+
+.gs-compass {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+  padding: 8px;
+}
+
+.gs-compass__dial {
+  flex: 0 0 auto;
+  width: 180px;
+  height: 180px;
+}
+
+.gs-compass__ring {
+  fill: none;
+  stroke: currentColor;
+  opacity: 0.35;
+  stroke-width: 1;
+}
+
+.gs-compass__ring--inner {
+  opacity: 0.2;
+}
+
+.gs-compass__tick {
+  fill: currentColor;
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.gs-compass__needle {
+  stroke: #ff8a65;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.gs-compass__hub {
+  fill: #ff8a65;
+}
+
+.gs-compass__readout {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: monospace;
+}
+
+.gs-compass__row {
+  display: flex;
+  gap: 8px;
+  font-size: 1.1em;
+}
+
+.gs-compass__label {
+  opacity: 0.6;
+  width: 2.2em;
+}
+
+.gs-compass__status {
+  margin-top: 6px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.85em;
+  width: fit-content;
+  background: rgba(128, 128, 128, 0.25);
+}
+
+.gs-compass__status.is-tracking {
+  background: rgba(76, 175, 80, 0.35);
+  color: #a5d6a7;
+}
+
+.gs-pass {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  font-family: monospace;
+}
+
+.gs-pass__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.05em;
+}
+
+.gs-pass__label {
+  opacity: 0.6;
+}
+
+.gs-pass__progress-track {
+  margin-top: 4px;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(128, 128, 128, 0.25);
+  overflow: hidden;
+}
+
+.gs-pass__progress-fill {
+  height: 100%;
+  background: #66bb6a;
+  transition: width 0.5s linear;
+}
+
+.gs-pass__hint {
+  margin-top: 8px;
+  opacity: 0.6;
+  font-size: 0.85em;
+}
+
+.gs-waterfall {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 4px;
+}
+
+.gs-waterfall__row {
+  display: flex;
+}
+
+.gs-waterfall__row--main {
+  flex: 2 1 auto;
+  min-height: 180px;
+}
+
+.gs-waterfall__row--plots {
+  flex: 1 1 auto;
+  min-height: 140px;
+  gap: 8px;
+}
+
+.gs-waterfall__canvas {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 180px;
+  background: black;
+}
+
+.gs-waterfall__spectrum-wrap {
+  flex: 2 1 0;
+  min-width: 0;
+  display: flex;
+}
+
+.gs-waterfall__spectrum {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 140px;
+  background: #0a0a0a;
+}
+
+.gs-waterfall__constellation-wrap {
+  flex: 1 1 0;
+  min-width: 140px;
+  display: flex;
+  justify-content: center;
+}
+
+.gs-waterfall__constellation {
+  aspect-ratio: 1 / 1;
+  height: 100%;
+  max-width: 100%;
+  background: black;
+}
+
+.gs-waterfall__status {
+  padding: 4px 8px;
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+
+.gs-waterfall__hint {
+  padding: 8px;
+  font-size: 0.85em;
+  opacity: 0.6;
+}
+
+.gs-override {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 12px;
+}
+
+.gs-override__section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gs-override__section h3 {
+  margin: 0 0 4px;
+  font-size: 0.9em;
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+.gs-override__section label {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.gs-override__section input {
+  width: 6em;
+}
+
+.gs-override__jog-pad {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  max-width: 220px;
+}
+
+.gs-override__park-btn {
+  background: #c62828;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.gs-override__status {
+  padding: 6px 8px;
+  border-radius: 4px;
+  background: rgba(76, 175, 80, 0.25);
+  font-size: 0.9em;
+}
+
+.gs-override__status.is-error {
+  background: rgba(198, 40, 40, 0.3);
+}
+
+.gs-override__ptt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.gs-override__badge {
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: rgba(128, 128, 128, 0.3);
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
+.gs-override__hint {
+  padding: 8px;
+  opacity: 0.6;
+  font-size: 0.9em;
+}
+
+.gs-override__log {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 160px;
+  overflow-y: auto;
+  font-size: 0.85em;
+}
+
+.gs-override__log-entry {
+  display: flex;
+  gap: 8px;
+  padding: 3px 6px;
+  border-radius: 3px;
+  background: rgba(128, 128, 128, 0.08);
+}
+
+.gs-override__log-entry.is-success {
+  border-left: 3px solid #66bb6a;
+}
+
+.gs-override__log-entry.is-error {
+  border-left: 3px solid #e57373;
+}
+
+.gs-override__log-entry.is-pending {
+  border-left: 3px solid #ffb74d;
+}
+
+.gs-override__log-time {
+  opacity: 0.6;
+  font-family: monospace;
+  flex: 0 0 auto;
+}
+
+.gs-override__log-label {
+  flex: 1 1 auto;
+}
+
+.gs-override__log-status {
+  flex: 0 0 auto;
+  text-transform: uppercase;
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+
+.gs-override__log-empty {
+  opacity: 0.5;
+  font-size: 0.9em;
+}
+
+.gs-camera {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.gs-camera__video {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  background: black;
+  object-fit: contain;
+}
+
+.gs-camera__error {
+  padding: 6px 8px;
+  background: rgba(198, 40, 40, 0.3);
+  font-size: 0.85em;
+}
+
+.gs-camera-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  padding: 24px;
+  gap: 8px;
+  opacity: 0.8;
+}
+
+.gs-weather {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 12px;
+  gap: 8px;
+}
+
+.gs-weather__status {
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+
+.gs-weather__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr));
+  gap: 10px;
+}
+
+.gs-weather__cell {
+  padding: 8px 10px;
+  border-radius: 4px;
+  background: rgba(128, 128, 128, 0.08);
+}
+
+.gs-weather__cell-label {
+  font-size: 0.75em;
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.gs-weather__cell-value {
+  font-size: 1.2em;
+  font-family: monospace;
+}
+
+.gs-weather__empty,
+.gs-weather__hint {
+  opacity: 0.6;
+  font-size: 0.9em;
+  padding: 8px;
+}
+
+.gs-camera-placeholder__icon {
+  font-size: 2.5em;
+}
+
+.gs-camera-placeholder__hint {
+  max-width: 420px;
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+
+.gs-grid {
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  // Lets the @container query below respond to this pane's own width, not the
+  // browser viewport's — necessary because OpenMCT's tree/inspector panes are
+  // resizable independently of the window, so viewport-based @media would be
+  // wrong here (e.g. a wide window with a wide Inspector pane open still
+  // leaves this pane narrow).
+  container-type: inline-size;
+}
+
+.gs-grid__container {
+  display: grid;
+  // min(320px, 100%), not a bare 320px: without the min(), auto-fit can leave a
+  // sliver leftover column (e.g. "320px 34px") at container widths just past
+  // one multiple of the track size, instead of cleanly collapsing to 1 column.
+  // The @container rule below is the real fix for that case; this is just
+  // defense-in-depth for containers narrower than 320px outright.
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  grid-auto-rows: minmax(280px, auto);
+  gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.gs-grid__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  padding: 32px;
+  gap: 6px;
+  opacity: 0.7;
+}
+
+.gs-grid__empty-icon {
+  font-size: 2.2em;
+  opacity: 0.6;
+}
+
+.gs-grid__empty-hint {
+  max-width: 420px;
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+
+.gs-tile {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 6px;
+  border: 1px solid rgba(128, 128, 128, 0.25);
+  background: rgba(128, 128, 128, 0.06);
+  overflow: hidden;
+  grid-column: span 1;
+}
+
+.gs-tile--wide {
+  grid-column: span 2;
+}
+
+.gs-tile__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+  background: rgba(128, 128, 128, 0.1);
+  flex: 0 0 auto;
+}
+
+.gs-tile__icon {
+  font-size: 1.1em;
+  opacity: 0.85;
+}
+
+.gs-tile__name {
+  font-weight: bold;
+  font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gs-tile__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.gs-tile__split {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.gs-tile__split > :first-child {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.gs-tile__split > :last-child {
+  flex: 0 0 auto;
+  border-top: 1px solid rgba(128, 128, 128, 0.15);
+}
+
+.gs-tile__unknown {
+  padding: 12px;
+  opacity: 0.6;
+  font-size: 0.85em;
+}
+
+.gs-contacts {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 12px;
+  gap: 8px;
+  font-size: 0.9em;
+}
+
+.gs-contacts__login {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 320px;
+}
+
+.gs-contacts__login-hint {
+  opacity: 0.7;
+  font-size: 0.9em;
+}
+
+.gs-contacts__login label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gs-contacts__error {
+  padding: 6px 8px;
+  border-radius: 4px;
+  background: rgba(198, 40, 40, 0.3);
+  font-size: 0.9em;
+}
+
+.gs-contacts__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gs-contacts__refreshed {
+  opacity: 0.6;
+  font-size: 0.85em;
+  flex: 1 1 auto;
+}
+
+.gs-contacts__logout {
+  opacity: 0.7;
+}
+
+.gs-contacts__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.gs-contacts__table th,
+.gs-contacts__table td {
+  text-align: left;
+  padding: 4px 8px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.gs-contacts__table th {
+  opacity: 0.6;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 0.8em;
+}
+
+.gs-contacts__leop-badge {
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: rgba(255, 183, 77, 0.35);
+  font-size: 0.8em;
+}
+
+.gs-contacts__empty {
+  opacity: 0.6;
+  padding: 12px;
+}
+
+/* narrow panes: no panel is worth spanning 2 columns anymore. This is a
+ * @container query (keyed to .gs-grid's own width via container-type above),
+ * not @media — @media reads the browser viewport, which is the wrong signal
+ * in a multi-pane app where this pane's actual width depends on how wide the
+ * tree/inspector panes are, not the window. Forcing a single explicit column
+ * here (rather than trusting repeat(auto-fit, minmax(...)) alone) also
+ * sidesteps a real browser quirk where, at container widths just past one
+ * multiple of the track minimum, auto-fit creates an extra sliver column
+ * (e.g. "320px 34px") instead of collapsing to one full-width column. */
+@container (max-width: 700px) {
+  .gs-grid__container {
+    grid-template-columns: 1fr;
+  }
+
+  .gs-tile--wide {
+    grid-column: span 1;
+  }
+}

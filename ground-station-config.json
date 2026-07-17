@@ -15,7 +15,7 @@
           "type": "sdr",
           "name": "SDR Waterfall",
           "waterfallWsUrl": "ws://ast-egsn.local:8765",
-          "zmqAddress": "tcp://127.0.0.1:55004",
+          "zmqAddress": "tcp://10.126.1.111:55004",
           "frequency": 437000000,
           "sampleRate": 250000,
           "fftSize": 1024,

@@ -56,3 +56,7 @@ codecov
 # Ground Station camera bridge — contains real camera RTSP credentials.
 # Copy mediamtx.yml.example to mediamtx.yml and fill in your real camera.
 mediamtx.yml
+
+# Ground Station MQTT credentials — contains a real broker password.
+# Copy local-env.example.js to local-env.js and fill in your real values.
+local-env.js

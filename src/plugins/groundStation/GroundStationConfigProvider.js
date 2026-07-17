@@ -82,6 +82,18 @@ export default function buildGroundStationConfigObjectMap(openmct, config) {
 
       // eslint-disable-next-line no-unused-vars -- type/name destructured only to exclude them from configuration
       const { key, type, name, ...configuration } = panel;
+
+      // Real MQTT credentials live in local-env.js (gitignored), not in this
+      // JSON file (which is committed to git) — fall back to those globals
+      // for any panel whose own mqttUsername/mqttPassword is blank, rather
+      // than requiring every panel to repeat the same secret.
+      if (!configuration.mqttUsername && window.GS_MQTT_USERNAME) {
+        configuration.mqttUsername = window.GS_MQTT_USERNAME;
+      }
+      if (!configuration.mqttPassword && window.GS_MQTT_PASSWORD) {
+        configuration.mqttPassword = window.GS_MQTT_PASSWORD;
+      }
+
       const panelIdentifier = { namespace: NAMESPACE, key };
       const panelKeyString = openmct.objects.makeKeyString(panelIdentifier);
 

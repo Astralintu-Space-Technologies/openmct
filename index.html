@@ -28,6 +28,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>Open MCT</title>
     <script src="dist/openmct.js"></script>
+    <!-- Gitignored — real MQTT credentials, never committed. See local-env.example.js.
+         Missing this file (e.g. before it's been set up) is fine: the bootstrap
+         script below falls back to empty strings. -->
+    <script src="local-env.js"></script>
     <link
       rel="icon"
       type="image/png"
@@ -118,9 +122,12 @@
           // for your deployment. Antenna/RF/pass/heartbeat telemetry and manual
           // override/waterfall controls stay disabled (with an on-screen hint)
           // until these are set.
+          //
+          // mqttUsername/mqttPassword come from local-env.js (gitignored),
+          // never hardcoded here — this file is committed to git.
           mqttUrl: 'wss://mqtt.astralintu-egsn.com:9001',
-          mqttUsername: '',
-          mqttPassword: '',
+          mqttUsername: window.GS_MQTT_USERNAME || '',
+          mqttPassword: window.GS_MQTT_PASSWORD || '',
           restBaseUrl: 'http://ast-egsn.local:8000',
           waterfallWsUrl: 'ws://ast-egsn.local:8765'
         })

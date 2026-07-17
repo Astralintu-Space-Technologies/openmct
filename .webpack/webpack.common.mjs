@@ -115,6 +115,12 @@ const config = {
           from: './ground-station-config.json'
         },
         {
+          // Gitignored real MQTT credentials — noErrorOnMissing since a
+          // fresh clone won't have it until local-env.example.js is copied.
+          from: './local-env.js',
+          noErrorOnMissing: true
+        },
+        {
           from: 'src/plugins/imagery/layers',
           to: 'imagery'
         }

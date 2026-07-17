@@ -1,0 +1,41 @@
+services:
+  openmct-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: openmct-groundstation:local
+    container_name: openmct-dashboard
+    ports:
+      - "8080:80"
+    networks:
+      - astralintu-network
+    restart: unless-stopped
+
+  zmq-ws-bridge:
+    build:
+      context: ./scripts
+      dockerfile: Dockerfile
+    image: zmq-ws-bridge:local
+    container_name: zmq-ws-bridge
+    # host networking, not the compose network: this needs to reach the SDR
+    # flowgraph's ZMQ PUB sink, which is a process on the host (often
+    # tcp://127.0.0.1:...) rather than another container.
+    network_mode: host
+    restart: unless-stopped
+
+  camera-bridge:
+    image: bluenviron/mediamtx:latest
+    container_name: camera-bridge
+    volumes:
+      - ./mediamtx.yml:/mediamtx.yml:ro
+    ports:
+      - "8554:8554" # RTSP
+      - "8888:8888" # HLS — this is what the Camera panel's streamUrl points at
+    networks:
+      - astralintu-network
+    restart: unless-stopped
+
+networks:
+  astralintu-network:
+    name: astralintu-network
+    external: true

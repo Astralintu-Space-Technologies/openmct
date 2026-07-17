@@ -1,0 +1,16 @@
+# MediaMTX config for the Ground Station camera bridge — RTSP in, HLS out
+# (verified against the real image's default /mediamtx.yml and paths syntax;
+# any key not set here just uses MediaMTX's own built-in default).
+#
+# Edit the "groundstation-camera" source below to your real RTSP camera URL,
+# then set the Camera panel's streamUrl (in ground-station-config.json) to:
+#   http://<this-host>:8888/groundstation-camera/index.m3u8
+
+hls: true
+hlsAddress: :8888
+hlsAlwaysRemux: true # start transcoding immediately, not only once a client asks
+hlsVariant: mpegts # widest browser/hls.js compatibility; switch to lowLatency once confirmed working
+
+paths:
+  groundstation-camera:
+    source: rtsp://USERNAME:PASSWORD@CAMERA_HOST:554/STREAM_PATH
